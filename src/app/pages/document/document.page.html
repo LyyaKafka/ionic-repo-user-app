@@ -36,6 +36,16 @@
   ></ion-searchbar>
 
   <h1 class="ion-margin">Daftar Dokumen</h1>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-button size="small" expand="block" (click)="toCreate()">
+        <ion-icon slot="start" name="add"></ion-icon>
+        Add Document
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
   <ion-card
     *ngFor="let document of documentsShowData"
     button
@@ -43,7 +53,10 @@
   >
     <ion-card-content>
       <ion-card-title>{{ document.title }}</ion-card-title>
-      <ion-card-subtitle>{{ document.kategori }}</ion-card-subtitle>
+      <ion-card-subtitle
+        ><b>{{ getDocVisibility(document) }}</b> {{ document.kategori
+        }}</ion-card-subtitle
+      >
       <h6 style="padding-top: 10px">Click To Open</h6>
     </ion-card-content>
   </ion-card>

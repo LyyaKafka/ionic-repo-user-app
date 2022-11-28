@@ -22,6 +22,7 @@ export class ModalPage implements OnInit {
 
   // download link in html
   downloadLink: any;
+  filename: any;
 
   constructor(
     private modalController: ModalController,
@@ -36,6 +37,8 @@ export class ModalPage implements OnInit {
     this.storageService.getUserById(this.document.ownerid).subscribe((res) => {
       this.documentUser = res;
     });
+
+    this.downloadDocument();
   }
 
   get documentVisibility() {
@@ -98,6 +101,15 @@ export class ModalPage implements OnInit {
 
   // cors json in root folder
   async downloadDocument() {
+    const storageRef = ref(this.storage, this.document.url);
+    this.filename = this.document.url.split('/')[2];
+    console.log(storageRef);
+    console.log(this.filename);
+
+    const dw = await getDownloadURL(storageRef);
+    console.log(dw);
+    this.downloadLink = dw;
+
     // console.log(this.document.url);
     // const storageRef = ref(this.storage, this.document.url);
     // getDownloadURL(storageRef).then(url => {

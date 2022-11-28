@@ -4,6 +4,7 @@ import { Document, User } from 'src/app/shared/storageprop';
 import { AuthService } from 'src/app/shared/auth.service';
 import { ModalPage } from './modal/modal.page';
 import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-document',
@@ -27,6 +28,8 @@ export class DocumentPage implements OnInit {
     private storageService: StorageService,
     private authService: AuthService,
     private modalController: ModalController,
+    private router: Router,
+
   ) {
     this.userData = this.authService.getUserLocalStorage();
   }
@@ -35,7 +38,13 @@ export class DocumentPage implements OnInit {
     this.setAll();
   }
 
+  toCreate(){
+      this.router.navigate(['document/create-document']);
+  }
 
+  getDocVisibility(document: Document){
+    return (document.visibility) ? 'Public' : 'Private';
+  }
 
   async openDoc(doc: Document) {
     const modal = await this.modalController.create({
