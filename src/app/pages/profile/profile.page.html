@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title> Profile </ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="homepage"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Nama</ion-card-subtitle>
+      <ion-card-title>{{ userData?.username }}</ion-card-title>
+    </ion-card-header>
+    <ion-button fill="clear" size="small" (click)="changeName()"
+      >Change Name</ion-button
+    >
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Email</ion-card-subtitle>
+      <ion-card-title>{{ userData?.email }}</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Password</ion-card-title>
+    </ion-card-header>
+    <ion-button fill="clear" size="small" (click)="changePass()"
+      >Edit Password</ion-button
+    >
+  </ion-card>
+</ion-content>

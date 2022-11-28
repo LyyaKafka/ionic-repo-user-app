@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-title color="dark">Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="dark" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Title</ion-card-subtitle>
+      <ion-card-title>{{ document.title }}</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Author</ion-card-subtitle>
+      <ion-card-title>{{ documentUser?.username }}</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Category</ion-card-subtitle>
+      <ion-card-title>{{ document.kategori }}</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Visibility</ion-card-subtitle>
+      <ion-card-title>{{ documentVisibility }}</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <ion-buttons>
+        <div *ngIf="isDocumentMadeByCurrentUser">
+          <ion-button fill="outline" color="tertiary" (click)="toEdit()"
+            >Edit</ion-button
+          >
+          <ion-button fill="outline" color="tertiary" (click)="deleteDocument()"
+            >Delete</ion-button
+          >
+        </div>
+        <!-- <a [href]="downloadLink" [download]="filename">
+          <ion-button fill="outline" color="tertiary">Download</ion-button>
+        </a> -->
+        <ion-button fill="outline" color="tertiary" (click)="downloadDocument()"
+          >Download</ion-button
+        >
+      </ion-buttons>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

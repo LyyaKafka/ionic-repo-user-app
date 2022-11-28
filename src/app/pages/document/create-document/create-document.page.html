@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title> Create Document</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="document"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <!-- <ion-card-header>
+      <ion-card-title>Dokumen</ion-card-title>
+      <ion-card-subtitle>Kumpulkan dokumenmu!</ion-card-subtitle>
+    </ion-card-header> -->
+    <form
+      [formGroup]="credentials"
+      (ngSubmit)="createNewDocument()"
+      method="post"
+    >
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked">Judul</ion-label>
+            <ion-input
+              type="text"
+              placeholder="Enter text"
+              formControlName="judulInput"
+            ></ion-input>
+            <ion-note
+              slot="error"
+              *ngIf="(judulInput?.dirty || judulInput?.touched) && judulInput?.errors"
+              >Title needs to be 10 characters</ion-note
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Kategori</ion-label>
+            <ion-input
+              type="text"
+              placeholder="Enter text"
+              formControlName="kategoriInput"
+            ></ion-input>
+            <ion-note
+              slot="error"
+              *ngIf="(kategoriInput?.dirty || kategoriInput?.touched) && kategoriInput?.errors"
+              >Category needs to be 2 characters</ion-note
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Visibilitas</ion-label>
+            <ion-select
+              placeholder="Public/Private"
+              formControlName="visibilitasInput"
+              multiple="false"
+            >
+              <ion-select-option value="true">Public</ion-select-option>
+              <ion-select-option value="false">Private</ion-select-option>
+            </ion-select>
+            <ion-note
+              slot="error"
+              *ngIf="(visibilitasInput?.dirty || visibilitasInput?.touched) && visibilitasInput?.errors"
+              >Visibility is required</ion-note
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">File</ion-label>
+            <ion-input
+              type="file"
+              formControlName="fileInput"
+              (change)="selectFile($event)"
+            ></ion-input>
+            <ion-note
+              slot="error"
+              *ngIf="(fileInput?.dirty || fileInput?.touched) && fileInput?.errors"
+              >File is required</ion-note
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-button
+              slot="end"
+              size="default"
+              type="submit"
+              [disabled]="!credentials.valid"
+              >Submit</ion-button
+            >
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </form>
+  </ion-card>
+
+  <!-- <a href="{{downloadLink}}" download>
+    <ion-button> download file </ion-button>
+  </a> -->
+</ion-content>

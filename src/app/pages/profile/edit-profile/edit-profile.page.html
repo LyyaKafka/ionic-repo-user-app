@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> Edit Profile </ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="dismissModal()">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="credentials" (ngSubmit)="changeName()" method="post">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Change Name</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked">New Name</ion-label>
+            <ion-input
+              type="text"
+              placeholder="Enter your new name..."
+              formControlName="username"
+            ></ion-input>
+            <ion-note
+              slot="error"
+              *ngIf="(username?.dirty || username?.touched) && username?.errors"
+              >Username needs to be 6 characters</ion-note
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-button
+              type="submit"
+              slot="end"
+              size="default"
+              (click)="changeName()"
+              [disabled]="!credentials.valid"
+              >Submit</ion-button
+            >
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>

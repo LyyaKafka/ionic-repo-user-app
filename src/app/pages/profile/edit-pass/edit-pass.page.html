@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Password</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="dismissModal()">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="changePassword()" [formGroup]="credentials" method="post">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Change Password</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked">Old Password</ion-label>
+            <ion-input
+              type="password"
+              placeholder="Enter Old Password"
+              formControlName="oldPassword"
+            ></ion-input>
+            <ion-note
+              slot="error"
+              *ngIf="(oldPassword?.dirty || oldPassword?.touched) && oldPassword?.errors"
+              >Password needs to be 6 characters</ion-note
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">New Password</ion-label>
+            <ion-input
+              type="password"
+              placeholder="Enter New Password"
+              formControlName="newPassword"
+            ></ion-input>
+            <ion-note
+              slot="error"
+              *ngIf="(newPassword?.dirty || newPassword?.touched) && newPassword?.errors"
+              >Password needs to be 6 characters</ion-note
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Confirm New Password</ion-label>
+            <ion-input
+              type="password"
+              placeholder="Confirm New Password"
+              formControlName="confirmPassword"
+            ></ion-input>
+            <ion-note
+              slot="error"
+              *ngIf="(confirmPassword?.dirty || confirmPassword?.touched) && confirmPassword?.errors"
+              >Password needs to be 6 characters</ion-note
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-button
+              type="submit"
+              slot="end"
+              size="default"
+              (click)="changePassword()"
+              [disabled]="!credentials.valid"
+              >Change Password</ion-button
+            >
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>
