@@ -55,7 +55,7 @@ export class SignUpPage implements OnInit {
       this.router.navigateByUrl('/homepage', { replaceUrl: true });
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 5000);
     } else {
       this.showAlert('Registration failed', 'Please try again!');
     }

@@ -49,9 +49,9 @@ export class StorageService {
     );
   }
 
-  updateUser(user: User, userid: string) {
+  async updateUser(user: User, userid: string) {
     const userDocRef = doc(this.firestore, `users/${userid}`);
-    return updateDoc(userDocRef, {
+    return await updateDoc(userDocRef, {
       username: user.username,
       email: user.email,
     });
