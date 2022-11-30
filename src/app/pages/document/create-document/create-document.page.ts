@@ -37,7 +37,6 @@ export class CreateDocumentPage implements OnInit {
 
     private loadingController: LoadingController,
     private storage: Storage,
-    private http: HttpClient,
     private fb: FormBuilder
   ) {
     this.userData = this.authService.getUserLocalStorage();
@@ -62,13 +61,16 @@ export class CreateDocumentPage implements OnInit {
   ngOnInit() {
     this.credentials = this.fb.group({
       judulInput: ['', [Validators.required, Validators.minLength(10)]],
-      kategoriInput: ['', [Validators.required, Validators.minLength(2)]],
+      kategoriInput: ['', [Validators.required]],
       visibilitasInput: ['', [Validators.required]],
       fileInput: ['', [Validators.required]],
     });
   }
 
   async createNewDocument() {
+    const loading = await this.loadingController.create();
+    await loading.present();
+
     // problem if theres two file that has the same name
     const storageRef = ref(
       this.storage,
@@ -84,6 +86,7 @@ export class CreateDocumentPage implements OnInit {
     );
 
     // console.log(uploadResult);
+    // console.log(this.credentials.value);
 
     if (uploadResult !== null) {
       const newDoc: Document = {
@@ -96,13 +99,13 @@ export class CreateDocumentPage implements OnInit {
 
       // console.log(newDoc);
 
-      await this.storageService.addDocument(newDoc).then((res) => {
+      await this.storageService.addDocument(newDoc).then(async (res) => {
+        await loading.dismiss();
+
         this.extraService
           .showAlert('Document Is Successfully Created')
           .then(() => {
-            this.router
-              .navigateByUrl('/document')
-              .then(() => window.location.reload());
+            this.router.navigateByUrl('/document', { replaceUrl: true });
           })
           .catch((error) => {
             this.extraService.showAlert(
@@ -112,6 +115,8 @@ export class CreateDocumentPage implements OnInit {
           });
       });
     } else {
+      await loading.dismiss();
+
       this.extraService.showAlert(
         'there seems to be a problem while uploading doc'
       );

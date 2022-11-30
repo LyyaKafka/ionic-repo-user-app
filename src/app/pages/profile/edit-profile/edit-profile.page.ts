@@ -4,6 +4,7 @@ import {
   ModalController,
   AlertController,
   ToastController,
+  LoadingController,
 } from '@ionic/angular';
 import { StorageService } from 'src/app/shared/storage.service';
 import { AuthService } from 'src/app/shared/auth.service';
@@ -23,7 +24,8 @@ export class EditProfilePage implements OnInit {
     private storageService: StorageService,
     private authService: AuthService,
     private toastCtrl: ToastController,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private loadingController: LoadingController
   ) {}
 
   ngOnInit() {
@@ -40,7 +42,10 @@ export class EditProfilePage implements OnInit {
     this.modalController.dismiss();
   }
 
-  changeName() {
+  async changeName() {
+    const loading = await this.loadingController.create();
+    await loading.present();
+
     // console.log(this.newName, this.userData);
     this.storageService
       .updateUser(
@@ -51,6 +56,8 @@ export class EditProfilePage implements OnInit {
         this.userData.uid
       )
       .then(async () => {
+        await loading.dismiss();
+
         const toast = await this.toastCtrl.create({
           message: 'New Name Successfully Changed',
           duration: 2000,
@@ -59,10 +66,12 @@ export class EditProfilePage implements OnInit {
         this.authService.startUserLocalStorage();
         setTimeout(() => {
           this.dismissModal();
-          window.location.reload(); // reloading look bad
-        }, 2000);
+          this.userData = this.authService.getUserLocalStorage();
+        }, 1000);
       })
       .catch(async (Err) => {
+        await loading.dismiss();
+
         const toast = await this.toastCtrl.create({
           message: 'There Seems To Be A Problem With The System',
           duration: 2000,

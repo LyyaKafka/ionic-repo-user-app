@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ExtraService } from 'src/app/shared/extra.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-edit-document',
@@ -25,7 +26,8 @@ export class EditDocumentPage implements OnInit {
     private router: Router,
     private activatedroute: ActivatedRoute,
     private extraService: ExtraService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private loadingController: LoadingController
   ) {
     this.userData = this.authService.getUserLocalStorage();
   }
@@ -33,7 +35,7 @@ export class EditDocumentPage implements OnInit {
   ngOnInit() {
     this.credentials = this.fb.group({
       judulInput: ['', [Validators.required, Validators.minLength(10)]],
-      kategoriInput: ['', [Validators.required, Validators.minLength(2)]],
+      kategoriInput: ['', [Validators.required]],
       visibilitasInput: ['', [Validators.required]],
     });
 
@@ -63,6 +65,9 @@ export class EditDocumentPage implements OnInit {
   }
 
   async editDocument() {
+    const loading = await this.loadingController.create();
+    await loading.present();
+
     const editDoc: Document = {
       title: this.judulInput.value,
       url: this.currentDocument.url,
@@ -75,16 +80,18 @@ export class EditDocumentPage implements OnInit {
 
     const res = this.storageService
       .updateDocument(editDoc, this.currentDocument.id)
-      .then((res) => {
+      .then(async (res) => {
+        await loading.dismiss();
+
         this.extraService
           .showAlert('Document Is Successfully Edited')
           .then(() => {
-            this.router
-              .navigateByUrl('/document')
-              .then(() => document.location.reload());
+            this.router.navigateByUrl('/document', { replaceUrl: true });
           });
       })
-      .catch((error) => {
+      .catch(async (error) => {
+        await loading.dismiss();
+
         this.extraService.showAlert(
           'there seems to be a problem while updating data'
         );

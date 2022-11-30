@@ -32,10 +32,16 @@ export class DocumentPage implements OnInit {
 
   ) {
     this.userData = this.authService.getUserLocalStorage();
+
+  }
+
+  ionViewWillEnter(){
+    this.documentsData = [];
+    this.setAll();
   }
 
   ngOnInit() {
-    this.setAll();
+
   }
 
   toCreate(){

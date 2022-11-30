@@ -4,6 +4,7 @@ import {
   ModalController,
   AlertController,
   ToastController,
+  LoadingController,
 } from '@ionic/angular';
 import { User } from '@angular/fire/auth';
 import { StorageService } from 'src/app/shared/storage.service';
@@ -26,7 +27,8 @@ export class EditPassPage implements OnInit {
     private toastCtrl: ToastController,
     private authService: AuthService,
     private extraService: ExtraService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private loadingController: LoadingController
   ) {}
 
   ngOnInit() {
@@ -54,30 +56,38 @@ export class EditPassPage implements OnInit {
   }
 
   async changePassword() {
-    if (this.confirmPassword.value === this.newPassword.value) {
-      this.authService.changePassword(
-        this.oldPassword.value,
-        this.newPassword.value
-      );
+    const loading = await this.loadingController.create();
+    await loading.present();
 
-      // do something
-      if (true) {
+    if (this.confirmPassword.value === this.newPassword.value) {
+      try {
+        this.authService.changePassword(
+          this.oldPassword.value,
+          this.newPassword.value
+        );
+
         const toast = await this.toastCtrl.create({
           message: 'New Password Successfully Changed',
-          duration: 2000,
+          duration: 1000,
         });
         toast.present();
         setTimeout(() => {
           this.dismissModal();
-          window.location.reload(); // reloading look bad
         }, 2000);
-      } else {
+      } catch (error) {
         const toast = await this.toastCtrl.create({
           message: 'There Seems To Be A Problem With The System',
           duration: 2000,
         });
+        toast.present();
       }
+
+      await loading.dismiss();
+
+      // do something
     } else {
+      await loading.dismiss();
+
       this.extraService.showAlert('Confirmation Password isnt Similar');
     }
   }

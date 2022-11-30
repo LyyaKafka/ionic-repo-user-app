@@ -65,17 +65,17 @@ export class AuthService {
     return user;
   }
 
-  reauthenticate(currentPassword: string) {
+  async reauthenticate(currentPassword: string) {
     var user = this.auth.currentUser;
     var cred = EmailAuthProvider.credential(user.email, currentPassword);
-    return reauthenticateWithCredential(user, cred);
+    return await reauthenticateWithCredential(user, cred);
   }
 
   changePassword(currentPassword: string, newPassword: string) {
-    this.reauthenticate(currentPassword)
-      .then(() => {
+    return this.reauthenticate(currentPassword)
+      .then(async () => {
         var user = this.auth.currentUser;
-        updatePassword(user, newPassword)
+        await updatePassword(user, newPassword)
           .then(() => {
             console.log('Password updated!');
           })

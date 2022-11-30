@@ -37,9 +37,7 @@
             >
           </ion-item>
 
-          <ion-item>
-            <ion-label position="stacked">Kategori</ion-label>
-            <ion-input
+          <!-- <ion-input
               type="text"
               placeholder="Enter text"
               formControlName="kategoriInput"
@@ -48,6 +46,24 @@
               slot="error"
               *ngIf="(kategoriInput?.dirty || kategoriInput?.touched) && kategoriInput?.errors"
               >Category needs to be 2 characters</ion-note
+            > -->
+
+          <ion-item>
+            <ion-label position="stacked">Kategori</ion-label>
+
+            <ion-select
+              placeholder="Jurnal/ Skripsi/ Lain-Lain"
+              formControlName="kategoriInput"
+              multiple="false"
+            >
+              <ion-select-option value="Jurnal">Jurnal</ion-select-option>
+              <ion-select-option value="Skripsi">Skripsi</ion-select-option>
+              <ion-select-option value="Lain-Lain">Lain-Lain</ion-select-option>
+            </ion-select>
+            <ion-note
+              slot="error"
+              *ngIf="(kategoriInput?.dirty || kategoriInput?.touched) && kategoriInput?.errors"
+              >Category is required</ion-note
             >
           </ion-item>
 

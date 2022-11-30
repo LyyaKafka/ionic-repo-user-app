@@ -109,17 +109,5 @@ export class ModalPage implements OnInit {
     const dw = await getDownloadURL(storageRef);
     console.log(dw);
     this.downloadLink = dw;
-
-    // console.log(this.document.url);
-    // const storageRef = ref(this.storage, this.document.url);
-    // getDownloadURL(storageRef).then(url => {
-    //   const xhr = new XMLHttpRequest();
-    //   xhr.responseType = 'blob';
-    //   xhr.onload = (event) => {
-    //     const blob = xhr.response;
-    //   };
-    //   xhr.open('GET', url);
-    //   xhr.send();
-    // });
   }
 }

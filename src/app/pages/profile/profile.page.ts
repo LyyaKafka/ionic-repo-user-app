@@ -6,35 +6,32 @@ import { ModalController } from '@ionic/angular';
 import { EditProfilePage } from './edit-profile/edit-profile.page';
 import { EditPassPage } from './edit-pass/edit-pass.page';
 
-
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-
   userData: User;
 
   constructor(
     private authService: AuthService,
     private storageService: StorageService,
-    private modalController: ModalController,
+    private modalController: ModalController
   ) {
-    this.userData = this.authService.getUserLocalStorage();
     // console.log(this.userData)
-   }
-
-  ngOnInit() {
   }
 
+  ngOnInit() {
+    this.userData = this.authService.getUserLocalStorage();
+  }
 
   async changeName() {
     const modal = await this.modalController.create({
       component: EditProfilePage,
       componentProps: {
-        userData: this.userData
-      }
+        userData: this.userData,
+      },
     });
     modal.present();
   }
@@ -43,8 +40,8 @@ export class ProfilePage implements OnInit {
     const modal = await this.modalController.create({
       component: EditPassPage,
       componentProps: {
-        userData: this.userData
-      }
+        userData: this.userData,
+      },
     });
     modal.present();
   }
