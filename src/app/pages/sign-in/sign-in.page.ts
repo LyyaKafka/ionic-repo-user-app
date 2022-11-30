@@ -49,7 +49,7 @@ export class SignInPage implements OnInit {
 
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 5000);
     } else {
       this.showAlert('Login failed', 'Please try again!');
     }

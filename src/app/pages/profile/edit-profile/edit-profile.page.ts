@@ -67,6 +67,7 @@ export class EditProfilePage implements OnInit {
         setTimeout(() => {
           this.dismissModal();
           this.userData = this.authService.getUserLocalStorage();
+          setTimeout(() => window.location.reload(), 5000);
         }, 1000);
       })
       .catch(async (Err) => {
