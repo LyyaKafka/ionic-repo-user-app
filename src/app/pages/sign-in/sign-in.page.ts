@@ -46,6 +46,10 @@ export class SignInPage implements OnInit {
     if (user !== null) {
       this.authService.startUserLocalStorage();
       this.router.navigateByUrl('/homepage', { replaceUrl: true });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } else {
       this.showAlert('Login failed', 'Please try again!');
     }
